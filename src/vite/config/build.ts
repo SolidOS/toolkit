@@ -1,0 +1,41 @@
+import { isAbsolute } from 'node:path';
+
+import type { UserConfig } from 'vite';
+
+export interface BuildConfigOptions {
+  entry: string;
+  overrides?: UserConfig['build'];
+}
+
+export default function ({ entry, overrides }: BuildConfigOptions): UserConfig['build'] {
+  const defaults: UserConfig['build'] = {
+    cssCodeSplit: true,
+    sourcemap: true,
+    lib: {
+      entry: {
+        index: entry,
+      },
+    },
+    rolldownOptions: {
+      output: [
+        {
+          format: 'es',
+          preserveModules: true,
+          preserveModulesRoot: 'src',
+          entryFileNames: '[name].esm.js',
+        },
+        {
+          format: 'cjs',
+          preserveModules: true,
+          preserveModulesRoot: 'src',
+          entryFileNames: '[name].cjs.js',
+        },
+      ],
+      external: (id: string) => !id.startsWith('.') && !isAbsolute(id),
+    },
+  };
+
+  if (!overrides) return defaults;
+
+  return { ...defaults, ...overrides };
+}

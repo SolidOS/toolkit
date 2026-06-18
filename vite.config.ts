@@ -16,6 +16,7 @@ export default defineConfig({
     },
   },
   fmt: {
+    sortImports: true,
     singleQuote: true,
   },
 });

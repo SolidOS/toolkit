@@ -1,7 +1,2 @@
-import type { PluginOption } from 'vite';
-
-export function solidPane(): PluginOption[] {
-  return [
-    //
-  ];
-}
+export * from './config';
+export * from './plugins';

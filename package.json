@@ -17,6 +17,20 @@
     "build": "vp pack",
     "check": "vp check"
   },
+  "dependencies": {
+    "@babel/core": "^7.29.0",
+    "@babel/plugin-proposal-decorators": "^7.29.7",
+    "@babel/plugin-transform-class-properties": "^7.29.7",
+    "@babel/plugin-transform-class-static-block": "^7.29.7",
+    "@babel/plugin-transform-runtime": "^7.29.0",
+    "@babel/plugin-transform-typescript": "^7.29.7",
+    "@babel/preset-env": "^7.29.5",
+    "@babel/preset-typescript": "^7.28.5",
+    "@rolldown/plugin-babel": "^0.2.3",
+    "unplugin-dts": "^1.0.2",
+    "vite-plugin-css-injected-by-js": "^3.5.2",
+    "vite-plugin-lit-css": "^3.0.0"
+  },
   "devDependencies": {
     "@types/node": "^24.0.0",
     "@typescript/native-preview": "7.0.0-dev.20260509.2",
