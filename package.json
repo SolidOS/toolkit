@@ -1,0 +1,36 @@
+{
+  "name": "solidos-toolkit",
+  "version": "0.0.0",
+  "description": "Tooling for the SolidOS projects stack",
+  "repository": "github:NoelDeMartin/solidos-toolkit",
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "exports": {
+    "./vite": {
+      "types": "./dist/vite/index.d.mts",
+      "import": "./dist/vite/index.mjs"
+    }
+  },
+  "scripts": {
+    "build": "vp pack",
+    "check": "vp check"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "@typescript/native-preview": "7.0.0-dev.20260509.2",
+    "typescript": "^6.0.3",
+    "vite": "npm:@voidzero-dev/vite-plus-core@latest",
+    "vite-plus": "^0.1.20"
+  },
+  "peerDependencies": {
+    "vite": "^8.0.0"
+  },
+  "peerDependenciesMeta": {
+    "vite": {
+      "optional": true
+    }
+  },
+  "packageManager": "pnpm@11.7.0"
+}
