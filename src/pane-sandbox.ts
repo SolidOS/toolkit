@@ -9,6 +9,9 @@ import 'solid-ui/theme.css';
 import 'solid-ui/components/provider';
 import 'solid-ui/components/account';
 
+import './styles/legacy-global.css';
+import './styles/legacy-utilities.css';
+
 function unsupportedPane(name: string): PaneDefinition {
   return {
     name: `missing:${name}`,

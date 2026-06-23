@@ -8,6 +8,7 @@ export default defineConfig({
       entry: { 'pane-sandbox': 'src/pane-sandbox.ts' },
       tsconfig: 'tsconfig.dom.json',
       dts: { tsgo: true },
+      css: { inject: true, fileName: 'pane-sandbox.css' },
       plugins: [raw(/\.html$/)],
     },
     {
