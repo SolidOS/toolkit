@@ -3,16 +3,19 @@ import type { PluginOption } from 'vite';
 
 import babel from './babel';
 import css from './css';
-import turtle from './turtle';
+import paneSandbox from './pane-sandbox';
+import type { PaneSandboxPluginOptions } from './pane-sandbox';
+import raw from './raw';
 
 export interface SolidPanePluginOptions {
   litDecoratorPaths: string[];
+  sandbox: PaneSandboxPluginOptions;
 }
 
 export default function (options: SolidPanePluginOptions): PluginOption[] {
   return [
     css(),
-    turtle(),
+    raw(/\.ttl$/),
     babel({ litDecoratorPaths: options.litDecoratorPaths }),
     dts({
       tsconfigPath: 'tsconfig.json',
@@ -20,5 +23,6 @@ export default function (options: SolidPanePluginOptions): PluginOption[] {
       outDirs: ['dist'],
       insertTypesEntry: true,
     }),
+    paneSandbox(options.sandbox),
   ];
 }
