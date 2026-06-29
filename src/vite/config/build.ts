@@ -8,7 +8,7 @@ export interface BuildConfigOptions {
 }
 
 export default function ({ entry, overrides }: BuildConfigOptions): UserConfig['build'] {
-  const defaults: UserConfig['build'] = {
+  return {
     cssCodeSplit: true,
     sourcemap: true,
     lib: {
@@ -33,9 +33,6 @@ export default function ({ entry, overrides }: BuildConfigOptions): UserConfig['
       ],
       external: (id: string) => !id.startsWith('.') && !isAbsolute(id),
     },
+    ...overrides,
   };
-
-  if (!overrides) return defaults;
-
-  return { ...defaults, ...overrides };
 }
