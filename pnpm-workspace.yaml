@@ -1,0 +1,4 @@
+minimumReleaseAgeExclude:
+  - solid-ui
+overrides:
+  vite: $vite

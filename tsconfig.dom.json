@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.node.json",
+  "compilerOptions": {
+    "composite": false,
+    "lib": ["ES2023", "DOM"]
+  },
+  "include": ["src/pane-sandbox.ts", "src/types/shims.d.ts"],
+  "exclude": []
+}
