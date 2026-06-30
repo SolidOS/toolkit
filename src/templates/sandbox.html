@@ -8,11 +8,77 @@
   </head>
   <body>
     <solid-ui-provider>
-      <header class="bg-gray-100 p-4 flex justify-between items-center mb-0">
-        <h1 class="text-2xl! font-bold mb-0">🧑‍💻 Pane Development Sandbox</h1>
+      <header
+        class="bg-gray-100 p-4 flex justify-between items-center mb-0 transition-transform delay-200 duration-300"
+      >
+        <div>
+          <h1 class="text-2xl! font-bold mb-0!">🧑‍💻 <span id="pane-name"></span> pane sandbox</h1>
+          <div class="mt-1.5 flex max-w-full items-center gap-2 text-sm">
+            <a
+              id="pane-subject"
+              class="min-w-0 truncate text-gray-600 hover:text-blue-700 hover:underline"
+              target="_blank"
+            ></a>
+            <solid-ui-button id="pane-subject-change" variant="ghost">
+              <svg
+                slot="icon"
+                class="size-3.5"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+              >
+                <!-- Icon from Lucide by Lucide Contributors - https://github.com/lucide-icons/lucide/blob/main/LICENSE -->
+                <path
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"
+                />
+              </svg>
+            </solid-ui-button>
+          </div>
+        </div>
         <solid-ui-account></solid-ui-account>
       </header>
-      <main class="flex items-center justify-center [&>*]:w-full">Loading pane...</main>
+      <main class="flex items-center justify-center [&>*]:w-full"></main>
+      <div
+        id="loading"
+        class="flex items-center justify-center fixed inset-0 z-50 bg-white transition-opacity duration-300"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="size-12" viewBox="0 0 24 24">
+          <!-- Icon from SVG Spinners by Utkarsh Verma - https://github.com/n3r4zzurr0/svg-spinners/blob/main/LICENSE -->
+          <g stroke="currentColor">
+            <circle cx="12" cy="12" r="9.5" fill="none" stroke-linecap="round" stroke-width="3">
+              <animate
+                attributeName="stroke-dasharray"
+                calcMode="spline"
+                dur="1.5s"
+                keySplines="0.42,0,0.58,1;0.42,0,0.58,1;0.42,0,0.58,1"
+                keyTimes="0;0.475;0.95;1"
+                repeatCount="indefinite"
+                values="0 150;42 150;42 150;42 150"
+              />
+              <animate
+                attributeName="stroke-dashoffset"
+                calcMode="spline"
+                dur="1.5s"
+                keySplines="0.42,0,0.58,1;0.42,0,0.58,1;0.42,0,0.58,1"
+                keyTimes="0;0.475;0.95;1"
+                repeatCount="indefinite"
+                values="0;-16;-59;-59"
+              />
+            </circle>
+            <animateTransform
+              attributeName="transform"
+              dur="2s"
+              repeatCount="indefinite"
+              type="rotate"
+              values="0 12 12;360 12 12"
+            />
+          </g>
+        </svg>
+      </div>
     </solid-ui-provider>
   </body>
 </html>

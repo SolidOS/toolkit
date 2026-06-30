@@ -1,6 +1,6 @@
 import type { DataBrowserContext, PaneDefinition } from 'pane-registry';
 import { sym } from 'rdflib';
-import type { NamedNode } from 'rdflib';
+import type { Fetcher, NamedNode } from 'rdflib';
 import { authn, solidLogicSingleton, store } from 'solid-logic';
 
 import type { PaneSandboxPluginOptions } from './vite/plugins/pane-sandbox';
@@ -8,6 +8,7 @@ import type { PaneSandboxPluginOptions } from './vite/plugins/pane-sandbox';
 import 'solid-ui/theme.css';
 import 'solid-ui/components/provider';
 import 'solid-ui/components/account';
+import 'solid-ui/components/button';
 
 import './styles/legacy-global.css';
 import './styles/legacy-utilities.css';
@@ -58,29 +59,65 @@ function configureFetcher(context: DataBrowserContext) {
   return fetcher;
 }
 
-export default async function (pane: PaneDefinition, options: PaneSandboxPluginOptions) {
-  const subject = options.subject;
-  const context = createSandboxContext(pane);
-  const fetcher = configureFetcher(context);
+function readSubjectFromUrl(): string | null {
+  return new URL(window.location.href).searchParams.get('subject');
+}
 
-  await authn.checkUser();
+function writeSubjectToUrl(subject: string) {
+  const url = new URL(window.location.href);
 
+  url.searchParams.set('subject', subject);
+  window.history.replaceState(null, '', url);
+}
+
+async function renderPane(
+  fetcher: Fetcher,
+  subject: string,
+  pane: PaneDefinition,
+  context: DataBrowserContext,
+) {
   try {
-    await fetcher?.load(subject);
+    await fetcher.load(subject);
   } catch (error) {
     console.error(error);
-    console.warn('Initial load failed, rendering anyway...');
+    console.warn(`Failed loading subject ${subject}, rendering anyway...`);
   }
 
-  const main = document.querySelector('main');
+  const main = document.querySelector('main') as HTMLElement;
+  const paneSubject = document.getElementById('pane-subject') as HTMLAnchorElement;
 
-  if (!main) {
-    alert('Sandbox main element not found!');
+  paneSubject.textContent = subject;
+  paneSubject.href = subject;
 
-    return;
-  }
+  main.replaceChildren(pane.render(sym(subject), context));
+}
 
-  const rendered = pane.render(sym(subject), context);
+export default async function (pane: PaneDefinition, options: PaneSandboxPluginOptions) {
+  let subject = readSubjectFromUrl() ?? options.subject;
+  const context = createSandboxContext(pane);
+  const fetcher = configureFetcher(context);
+  const header = document.querySelector('header') as HTMLElement;
+  const changeSubject = document.getElementById('pane-subject-change') as HTMLElement;
+  const loading = document.getElementById('loading') as HTMLElement;
+  const paneName = document.getElementById('pane-name') as HTMLElement;
 
-  main.replaceChildren(rendered);
+  await authn.checkUser();
+  await renderPane(fetcher, subject, pane, context);
+
+  header.classList.remove('-translate-y-full');
+  loading.style.opacity = '0';
+  paneName.textContent = pane.name;
+  changeSubject.addEventListener('click', async () => {
+    const newSubject = prompt('Enter new subject:', subject);
+
+    if (!newSubject) {
+      return;
+    }
+
+    subject = newSubject;
+    writeSubjectToUrl(subject);
+    await renderPane(fetcher, subject, pane, context);
+  });
+
+  setTimeout(() => loading.remove(), 300);
 }
