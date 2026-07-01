@@ -3,6 +3,7 @@ import type { PluginOption } from 'vite';
 
 import babel from './babel';
 import css from './css';
+import icons from './icons';
 import paneSandbox from './pane-sandbox';
 import type { PaneSandboxPluginOptions } from './pane-sandbox';
 import raw from './raw';
@@ -15,6 +16,7 @@ export interface SolidPanePluginOptions {
 export default function (options: SolidPanePluginOptions): PluginOption[] {
   return [
     css(),
+    icons(),
     raw(/\.ttl$/),
     babel({ litDecoratorPaths: options.litDecoratorPaths }),
     dts({
