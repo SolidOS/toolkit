@@ -12,6 +12,7 @@ import 'solid-ui/components/button';
 
 import './styles/legacy-global.css';
 import './styles/legacy-utilities.css';
+import './styles/sandbox.css';
 
 function unsupportedPane(name: string): PaneDefinition {
   return {
@@ -104,7 +105,7 @@ export default async function (pane: PaneDefinition, options: PaneSandboxPluginO
   await authn.checkUser();
   await renderPane(fetcher, subject, pane, context);
 
-  header.classList.remove('-translate-y-full');
+  header.classList.remove('sandbox-header--hidden');
   loading.style.opacity = '0';
   paneName.textContent = pane.name;
   changeSubject.addEventListener('click', async () => {

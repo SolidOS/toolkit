@@ -3,26 +3,36 @@
   <head>
     <meta charset="utf-8" />
     <title>🧑‍💻 Pane Development Sandbox</title>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+      #loading {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        inset: 0;
+        z-index: 50;
+        background-color: #fff;
+        transition: opacity 300ms;
+      }
+
+      #loading svg {
+        width: 3rem;
+        height: 3rem;
+      }
+    </style>
     <script type="module" src="/virtual:pane-sandbox"></script>
   </head>
   <body>
     <solid-ui-provider>
-      <header
-        class="bg-gray-100 p-4 flex justify-between items-center mb-0 transition-transform delay-200 duration-300"
-      >
+      <header class="sandbox-header sandbox-header--hidden">
         <div>
-          <h1 class="text-2xl! font-bold mb-0!">🧑‍💻 <span id="pane-name"></span> pane sandbox</h1>
-          <div class="mt-1.5 flex max-w-full items-center gap-2 text-sm">
-            <a
-              id="pane-subject"
-              class="min-w-0 truncate text-gray-600 hover:text-blue-700 hover:underline"
-              target="_blank"
-            ></a>
+          <h1>🧑‍💻 <span id="pane-name"></span> pane sandbox</h1>
+          <div class="sandbox-subject-row">
+            <a id="pane-subject" class="sandbox-subject-link" target="_blank"></a>
             <solid-ui-button id="pane-subject-change" variant="ghost">
               <svg
                 slot="icon"
-                class="size-3.5"
+                class="sandbox-icon"
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
               >
@@ -41,12 +51,9 @@
         </div>
         <solid-ui-account></solid-ui-account>
       </header>
-      <main class="flex items-center justify-center [&>*]:w-full"></main>
-      <div
-        id="loading"
-        class="flex items-center justify-center fixed inset-0 z-50 bg-white transition-opacity duration-300"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" class="size-12" viewBox="0 0 24 24">
+      <main class="sandbox-main"></main>
+      <div id="loading">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
           <!-- Icon from SVG Spinners by Utkarsh Verma - https://github.com/n3r4zzurr0/svg-spinners/blob/main/LICENSE -->
           <g stroke="currentColor">
             <circle cx="12" cy="12" r="9.5" fill="none" stroke-linecap="round" stroke-width="3">
