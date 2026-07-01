@@ -7,6 +7,7 @@ const ENTRY_RESOLVED_ID = '\0virtual:pane-sandbox';
 
 export interface PaneSandboxPluginOptions {
   subject: string;
+  entry?: string;
 }
 
 export default function (options: PaneSandboxPluginOptions): Plugin {
@@ -43,7 +44,7 @@ export default function (options: PaneSandboxPluginOptions): Plugin {
 
       return `
         import load from 'solidos-toolkit/pane-sandbox';
-        import pane from './src/index.ts';
+        import pane from '${options.entry ?? './src/index.ts'}';
 
         load(pane, ${JSON.stringify(options)});
       `;

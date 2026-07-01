@@ -17,6 +17,11 @@ export default defineConfig({
       dts: { tsgo: true },
       plugins: [raw(/\.html$/)],
     },
+    {
+      entry: { 'testing/index': 'src/testing/index.ts' },
+      tsconfig: 'tsconfig.dom.json',
+      dts: { tsgo: true },
+    },
   ],
   lint: {
     options: {
