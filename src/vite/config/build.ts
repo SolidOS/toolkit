@@ -31,7 +31,14 @@ export default function ({ entry, overrides }: BuildConfigOptions): UserConfig['
           entryFileNames: '[name].cjs.js',
         },
       ],
-      external: (id: string) => !id.startsWith('.') && !isAbsolute(id),
+      external(id: string) {
+        return (
+          !id.startsWith('~icons/') &&
+          !id.startsWith('@/') &&
+          !id.startsWith('.') &&
+          !isAbsolute(id)
+        );
+      },
     },
     ...overrides,
   };
