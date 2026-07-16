@@ -139,7 +139,7 @@ function getOutliner(dom: Document) {
       a.href = obj.uri;
       a.textContent = utils.label(obj);
       a.target = '_blank';
-      td.appendChild(a);
+      a.rel = 'noopener noreferrer';
       return td;
     },
     GotoSubject: (
