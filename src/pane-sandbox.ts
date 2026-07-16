@@ -2,8 +2,7 @@ import type { DataBrowserContext, PaneDefinition } from 'pane-registry';
 import { sym } from 'rdflib';
 import type { Fetcher, NamedNode } from 'rdflib';
 import { authn, solidLogicSingleton, store } from 'solid-logic';
-
-import type { PaneSandboxPluginOptions } from './vite/plugins/pane-sandbox';
+import { utils } from 'solid-ui';
 
 import 'solid-ui/theme.css';
 import 'solid-ui/components/provider';
@@ -13,6 +12,7 @@ import 'solid-ui/components/button';
 import './styles/legacy-global.css';
 import './styles/legacy-utilities.css';
 import './styles/sandbox.css';
+import type { PaneSandboxPluginOptions } from './vite/plugins/pane-sandbox';
 
 function unsupportedPane(name: string): PaneDefinition {
   return {
@@ -30,7 +30,7 @@ function unsupportedPane(name: string): PaneDefinition {
 }
 
 function createSandboxContext(pane: PaneDefinition): DataBrowserContext {
-  return {
+  const context: DataBrowserContext = {
     session: {
       store,
       paneRegistry: {
@@ -43,8 +43,10 @@ function createSandboxContext(pane: PaneDefinition): DataBrowserContext {
       logic: solidLogicSingleton,
     },
     dom: document,
-    getOutliner: () => null,
+    getOutliner,
   };
+
+  return context;
 }
 
 function configureFetcher(context: DataBrowserContext) {
@@ -121,4 +123,42 @@ export default async function (pane: PaneDefinition, options: PaneSandboxPluginO
   });
 
   setTimeout(() => loading.remove(), 300);
+}
+
+function getOutliner(dom: HTMLDocument) {
+  return {
+    VIEWAS_boring_default: null,
+    propertyTR: (outlinerDom: HTMLDocument) => {
+      const tr = outlinerDom.createElement('tr');
+      tr.appendChild(outlinerDom.createElement('td'));
+      return tr;
+    },
+    outlineObjectTD: (obj: NamedNode, _view: unknown, _unused: unknown, _st: unknown) => {
+      const td = dom.createElement('td');
+      const a = dom.createElement('a');
+      a.href = obj.uri;
+      a.textContent = utils.label(obj);
+      a.target = '_blank';
+      a.rel = 'noopener noreferrer';
+      return td;
+    },
+    GotoSubject: (
+      subject: NamedNode,
+      _expand: unknown,
+      _pane: unknown,
+      _solo: unknown,
+      _referrer: unknown,
+      table: HTMLElement,
+    ) => {
+      const tr = dom.createElement('tr');
+      const td = dom.createElement('td');
+      const a = dom.createElement('a');
+      a.href = subject.uri;
+      a.textContent = utils.label(subject);
+      a.target = '_blank';
+      a.rel = 'noopener noreferrer';
+      tr.appendChild(td);
+      table.appendChild(tr);
+    },
+  };
 }
