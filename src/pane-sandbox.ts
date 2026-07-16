@@ -30,7 +30,7 @@ function unsupportedPane(name: string): PaneDefinition {
 }
 
 function createSandboxContext(pane: PaneDefinition): DataBrowserContext {
-  const context = {
+  const context: DataBrowserContext = {
     session: {
       store,
       paneRegistry: {
@@ -43,8 +43,8 @@ function createSandboxContext(pane: PaneDefinition): DataBrowserContext {
       logic: solidLogicSingleton,
     },
     dom: document,
-    getOutliner: getOutliner(document),
-  } as DataBrowserContext;
+    getOutliner,
+  };
 
   return context;
 }
@@ -125,12 +125,12 @@ export default async function (pane: PaneDefinition, options: PaneSandboxPluginO
   setTimeout(() => loading.remove(), 300);
 }
 
-function getOutliner(dom: Document) {
-  return () => ({
+function getOutliner(dom: HTMLDocument) {
+  return {
     VIEWAS_boring_default: null,
-    propertyTR: (dom: Document) => {
-      const tr = dom.createElement('tr');
-      tr.appendChild(dom.createElement('td'));
+    propertyTR: (outlinerDom: HTMLDocument) => {
+      const tr = outlinerDom.createElement('tr');
+      tr.appendChild(outlinerDom.createElement('td'));
       return tr;
     },
     outlineObjectTD: (obj: NamedNode, _view: unknown, _unused: unknown, _st: unknown) => {
@@ -160,5 +160,5 @@ function getOutliner(dom: Document) {
       tr.appendChild(td);
       table.appendChild(tr);
     },
-  });
+  };
 }
