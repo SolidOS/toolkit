@@ -156,7 +156,7 @@ function getOutliner(dom: Document) {
       a.href = subject.uri;
       a.textContent = utils.label(subject);
       a.target = '_blank';
-      td.appendChild(a);
+      a.rel = 'noopener noreferrer';
       tr.appendChild(td);
       table.appendChild(tr);
     },
