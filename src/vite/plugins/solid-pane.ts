@@ -14,17 +14,25 @@ export interface SolidPanePluginOptions {
 }
 
 export default function (options: SolidPanePluginOptions): PluginOption[] {
-  return [
+  const isWatch = process.argv.includes('--watch') || process.argv.includes('-w');
+
+  const plugins: PluginOption[] = [
     css(),
     icons(),
     raw(/\.ttl$/),
     babel({ litDecoratorPaths: options.litDecoratorPaths }),
-    dts({
-      tsconfigPath: 'tsconfig.json',
-      entryRoot: 'src',
-      outDirs: ['dist'],
-      insertTypesEntry: true,
-    }),
+    ...(isWatch
+      ? []
+      : [
+          dts({
+            tsconfigPath: 'tsconfig.json',
+            entryRoot: 'src',
+            outDirs: ['dist'],
+            insertTypesEntry: true,
+          }),
+        ]),
     paneSandbox(options.sandbox),
   ];
+
+  return plugins;
 }
