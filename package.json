@@ -23,7 +23,8 @@
   },
   "scripts": {
     "build": "vp pack",
-    "check": "vp check"
+    "check": "vp check",
+    "watch": "vp pack -w"
   },
   "dependencies": {
     "@babel/core": "^7.29.0",
