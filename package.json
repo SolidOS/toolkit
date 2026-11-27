@@ -1,6 +1,6 @@
 {
   "name": "solidos-toolkit",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Tooling for the SolidOS projects stack",
   "repository": "github:SolidOS/toolkit",
   "files": [
@@ -56,9 +56,9 @@
     "vitest": "^4.0.0"
   },
   "peerDependencies": {
-    "pane-registry": ">=3.1.1 <6.0.0 || >=5.1.2-0 <6.0.0",
+    "pane-registry": ">=3.1.1 <6.0.0 || >=5.1.3-0 <6.0.0",
     "rdflib": "^2.3.6",
-    "solid-logic": ">=4.0.7 <7.0.0 || >=6.2.1-0 <7.0.0",
+    "solid-logic": ">=4.0.7 <7.0.0 || >=6.2.2-0 <7.0.0",
     "solid-ui": ">=3.1.2 <6.0.0 || >=5.1.1-0 <6.0.0",
     "vite": "^8.0.0",
     "vitest": "^4.0.0"
