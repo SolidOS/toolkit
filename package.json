@@ -1,6 +1,6 @@
 {
   "name": "solidos-toolkit",
-  "version": "1.1.0",
+  "version": "1.1.1S",
   "description": "Tooling for the SolidOS projects stack",
   "repository": "github:SolidOS/toolkit",
   "files": [
